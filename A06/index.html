@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Aespa & Le Sserafim</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <style>
+    body {
+      background-image: url('drama.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    body[data-theme="dark"] {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+
+    body[data-theme="dark"] .card {
+      background-color: #1f1f1f;
+      color: #e0e0e0;
+    }
+
+    body[data-theme="dark"] .btn-primary {
+      background-color: #bb86fc;
+      border-color: bl;
+    }
+
+    body[data-theme="dark"] .btn-outline {
+      color:white;
+      background-color: #a070db;
+    }
+
+    body[data-theme="dark"] .btn-outline:hover {
+      background-color: #723bb4;
+      color: white;
+    }
+
+    body[data-theme="light"] .btn-outline {
+      color:white;
+      background-color: #a070db;
+    }
+
+    body[data-theme="light"] .btn-outline:hover {
+      background-color: #723bb4;
+      color: white;
+    }
+
+    body[data-theme="light"] .header-title {
+      color: white !important;
+    }
+
+    .theme-btn {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 999;
+    }
+  </style>
+</head>
+
+<body data-theme="light">
+
+  <button class="btn btn-secondary theme-btn" onclick="toggleTheme()" id="themeButton">Dark Mode</button>
+
+  <div class="overlay">
+    <a href="../index.html" class="btn btn-primary m-3" style="color: rgb(238, 255, 255);">Back to profile</a>
+
+    <div class="container-fluid p-2 mb-3" style="color: white;">
+      <div class="h3 text-center header-title">Aespa & Le Sserafim</div>
+    </div>
+
+    <div class="container-fluid my-3">
+      <div class="row" id="container-row"></div>
+    </div>
+
+    <div class="container-fluid mt-3 py-1" style="background-color: rgb(61, 5, 5); color: white;">
+      <div class="row">
+        <div class="col text-center">
+          <div class="h2 mb-5">Groups</div>
+
+          <div onmouseover="aespaMouseEnter('aespaButton')" onmouseleave="aespaMouseLeave('aespaButton')"
+            id="aespaButton" class="card p-4 my-4 rounded-5 mx-auto text-center"
+            style="max-width: 200px; color: black;">
+            Aespa
+          </div>
+
+          <div onmouseover="aespaMouseEnter('lsrfmButton')" onmouseleave="aespaMouseLeave('lsrfmButton')"
+            id="lsrfmButton" class="card p-4 my-4 rounded-5 mx-auto text-center"
+            style="max-width: 200px; color: black;">
+            Le Sserafim
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container text-center my-4">
+      <button class="btn btn-primary mb-3" data-toggle="collapse" data-target="#memberList"
+        aria-expanded="false" aria-controls="memberList">
+        Show / Hide 
+      </button>
+
+      <div class="collapse" id="memberList">
+        <div class="card card-body bg-light text-dark">
+          <div class="h5 mb-3">Le Sserafim and Aespa Members</div>
+          <div class="row">
+            <div class="col-md-6">
+              <strong>Le Sserafim</strong>
+              <ul class="list-unstyled">
+                <li>Kim Chaewon</li>
+                <li>Huh Yunjin</li>
+                <li>Miyawaki Sakura</li>
+                <li>Nakamura Kazuha</li>
+                <li>Hong Eunchae</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <strong>Aespa</strong>
+              <ul class="list-unstyled">
+                <li>Karina</li>
+                <li>Winter</li>
+                <li>Giselle</li>
+                <li>Ningning</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    var titles = ["Karina", "Winter", "Giselle", "Ningning", "Chaewon", "Sakura", "Yunjin", "Kazuha", "Eunchae"];
+    var photos = ["karina3.jpg", "winter3.jpg", "giselle2.jpg", "ningning.jpg", "chaewon2.jpg", "sakura2.jpg", "yunjin2.jpg", "kazu.jpg", "eunch.jpg"];
+    var contents = ["Aespa", "Aespa", "Aespa", "Aespa", "Le Sserafim", "Le Sserafim", "Le Sserafim", "Le Sserafim", "Le Sserafim"];
+
+    var rowElement = document.getElementById("container-row");
+    for (var i = 0; i < titles.length; i++) {
+      rowElement.innerHTML += `
+        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch p-3">
+          <div class="card shadow rounded-5 overflow-hidden w-100" style="height: 100%;">
+            <img src="photos/${photos[i]}" class="card-img-top bg-white" style="height: 300px; object-fit: contain;" alt="">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">${titles[i]}</h5>
+              <p class="card-text flex-grow-1">${contents[i]}</p>
+              <a href="#" class="btn btn-primary mt-auto">Preview</a>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const button = document.getElementById("themeButton");
+      const current = body.getAttribute("data-theme");
+
+      if (current === "dark") {
+        body.setAttribute("data-theme", "light");
+        button.textContent = "Dark Mode";
+      } else {
+        body.setAttribute("data-theme", "dark");
+        button.textContent = "Light Mode";
+      }
+    }
+
+    function aespaMouseEnter(id) {
+      var inquireButton = document.getElementById(id);
+      inquireButton.style.backgroundColor = "pink";
+      inquireButton.classList.add("shadow");
+    }
+
+    function aespaMouseLeave(id) {
+      var inquireButton = document.getElementById(id);
+      inquireButton.style.backgroundColor = "white";
+      inquireButton.classList.remove("shadow");
+    }
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

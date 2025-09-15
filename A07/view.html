@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Info</title>
+  <link rel="icon" href="valo logo.webp">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    body {
+      background-color: #0f1923;
+      color: white;
+    }
+
+    .agent-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .agent-name {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+
+    .role-badge {
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 6px 14px;
+      border-radius: 12px;
+      color: white;
+      display: inline-block;
+    }
+
+    .Duelist {
+      background-color: #d32f2f;
+    }
+
+    .Initiator {
+      background-color: #388e3c;
+    }
+
+    .Sentinel {
+      background-color: #1976d2;
+    }
+
+    .Controller {
+      background-color: #9c27b0;
+    }
+
+    .back-button {
+      background-color: #17CBC2;
+      border: none;
+    }
+
+    .ability-card {
+      background-color: #1f2a37;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .ability-icon {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    .ability-name {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .ability-desc {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid text-center my-3">
+    <div class="row">
+      <div class="col">
+        <button class="btn back-button rounded-4 mb-3" onclick="window.history.back()">Back to Agents</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row" id="agentInfo"></div>
+      <div class="row mt-4">
+        <div class="col">
+          <h4>Abilities</h4>
+        </div>
+      </div>
+      <div class="row" id="agentAbilities"></div>
+    </div>
+  </div>
+
+  <script>
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    async function loadAgentData(agentId) {
+      try {
+        const res = await fetch(`https://valorant-api.com/v1/agents/${agentId}`);
+        const { data } = await res.json();
+
+        const roleClass = data.role?.displayName?.replace(/\s+/g, '') || 'Unknown';
+
+        document.getElementById("agentInfo").innerHTML = `
+          <div class="col">
+            <div class="agent-img-container mb-3">
+              <img src="${data.fullPortrait || data.displayIcon}" alt="${data.displayName}">
+            </div>
+            <div class="agent-name">${data.displayName}</div>
+            ${data.role ? `<div class="role-badge ${roleClass} my-2">${data.role.displayName}</div>` : ''}
+            <p class="mt-4 px-3">${data.description || 'No description available.'}</p>
+          </div>
+        `;
+
+        const abilitiesContainer = document.getElementById("agentAbilities");
+        abilitiesContainer.innerHTML = "";
+
+        data.abilities.forEach(ability => {
+          if (!ability.displayIcon || !ability.displayName) return;
+
+          abilitiesContainer.innerHTML += `
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="ability-card">
+                <img class="ability-icon" src="${ability.displayIcon}" alt="${ability.displayName}">
+                <div class="ability-name">${ability.displayName}</div>
+                <div class="ability-desc mt-2">${ability.description || "No description"}</div>
+              </div>
+            </div>
+          `;
+        });
+
+      } catch (err) {
+        console.error("Error loading agent data:", err);
+        document.getElementById("agentInfo").innerHTML = `<p>Error loading agent info.</p>`;
+      }
+    }
+
+    const agentId = getQueryParam("agentId");
+    if (agentId) {
+      loadAgentData(agentId);
+    } else {
+      document.getElementById("agentInfo").innerHTML = `<p>No agent ID found in URL.</p>`;
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
